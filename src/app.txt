@@ -1,0 +1,323 @@
+import React, { useState, useEffect } from "react";
+import Tree from "react-d3-tree";
+import "./App.css";
+
+function buildHuffmanTreeSteps(freqMap) {
+  const pq = Object.entries(freqMap).map(([char, freq]) => ({
+    char,
+    name: `${char} (${freq})`,
+    freq,
+    children: [],
+  }));
+
+  let steps = [];
+  let descriptions = [];
+
+  steps.push(JSON.parse(JSON.stringify(pq)));
+  descriptions.push("Step 1: Create a node for each character with its frequency.");
+
+  while (pq.length > 1) {
+    pq.sort((a, b) => a.freq - b.freq);
+
+    const left = pq.shift();
+    const right = pq.shift();
+
+    const merged = {
+      char: null,
+      name: `(${left.freq + right.freq})`,
+      freq: left.freq + right.freq,
+      children: [left, right],
+    };
+
+    pq.push(merged);
+
+    steps.push(JSON.parse(JSON.stringify(pq)));
+    descriptions.push(
+      `Merged the two smallest nodes: ${left.name} and ${right.name} into a new node (${merged.freq}).`
+    );
+  }
+
+  descriptions[descriptions.length - 1] +=
+    " Final step: Only one node remains — this is the Huffman Tree root.";
+
+  return { steps, descriptions, finalTree: pq[0] };
+}
+
+function convertToTreeData(node) {
+  if (!node) return null;
+  return {
+    name: node.name,
+    attributes: { freq: node.freq },
+    children: node.children ? node.children.map(convertToTreeData) : [],
+  };
+}
+
+function getHuffmanCodes(node, prefix = "", codes = {}) {
+  if (!node) return;
+  if (!node.children || node.children.length === 0) {
+    codes[node.char] = prefix || "0";
+  }
+  if (node.children) {
+    getHuffmanCodes(node.children[0], prefix + "0", codes);
+    getHuffmanCodes(node.children[1], prefix + "1", codes);
+  }
+  return codes;
+}
+
+function decodeHuffman(encodedStr, tree) {
+  let result = "";
+  let current = tree;
+  for (let bit of encodedStr) {
+    current = bit === "0" ? current.children[0] : current.children[1];
+    if (!current.children || current.children.length === 0) {
+      result += current.char;
+      current = tree;
+    }
+  }
+  return result;
+}
+
+export default function App() {
+  const [text, setText] = useState("");
+  const [steps, setSteps] = useState([]);
+  const [descriptions, setDescriptions] = useState([]);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [finalTree, setFinalTree] = useState(null);
+  const [decodeInput, setDecodeInput] = useState("");
+  const [decodedOutput, setDecodedOutput] = useState("");
+
+  useEffect(() => {
+    if (steps.length > 0 && currentStep < steps.length - 1) {
+      const timer = setTimeout(() => {
+        setCurrentStep((prev) => prev + 1);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [steps, currentStep]);
+
+  const handleGenerate = () => {
+    if (!text.trim()) return;
+
+    const freqMap = {};
+    for (let char of text) {
+      if (char === " ") continue;
+      freqMap[char] = (freqMap[char] || 0) + 1;
+    }
+
+    const { steps: huffmanSteps, descriptions: stepDescriptions, finalTree } =
+      buildHuffmanTreeSteps(freqMap);
+    setSteps(huffmanSteps);
+    setDescriptions(stepDescriptions);
+    setFinalTree(finalTree);
+    setCurrentStep(0);
+    setDecodeInput("");
+    setDecodedOutput("");
+  };
+
+  const handleDecode = () => {
+    if (!decodeInput.trim() || !finalTree) return;
+    setDecodedOutput(decodeHuffman(decodeInput, finalTree));
+  };
+
+  const handleReset = () => {
+    setText("");
+    setSteps([]);
+    setDescriptions([]);
+    setCurrentStep(0);
+    setFinalTree(null);
+    setDecodeInput("");
+    setDecodedOutput("");
+  };
+
+  const currentTreeData =
+    steps.length > 0
+      ? steps[currentStep].length === 1
+        ? [convertToTreeData(steps[currentStep][0])]
+        : steps[currentStep].map(convertToTreeData)
+      : [];
+
+  const finalCodes =
+    finalTree && currentStep === steps.length - 1
+      ? getHuffmanCodes(finalTree)
+      : null;
+
+  const renderCustomNode = ({ nodeDatum }) => (
+    <g>
+      <circle r={20} fill="white" stroke="white" strokeWidth={2} />
+      <text
+        fill="black"
+        stroke="none"
+        fontSize="12"
+        fontWeight="bold"
+        textAnchor="middle"
+        alignmentBaseline="middle"
+      >
+        {nodeDatum.name}
+      </text>
+    </g>
+  );
+
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        background: "#000",
+        color: "white",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Input Section */}
+      <div
+        style={{
+          padding: "20px",
+          background: "#111",
+          display: "flex",
+          gap: "10px",
+          alignItems: "center",
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Enter text for Huffman Encoding"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          style={{
+            padding: "10px",
+            width: "400px",
+            borderRadius: "5px",
+            border: "none",
+            background: "#222",
+            color: "white",
+          }}
+        />
+        <button
+          onClick={handleGenerate}
+          style={{
+            padding: "10px 20px",
+            background: "#4f46e5",
+            border: "none",
+            borderRadius: "5px",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Generate Tree
+        </button>
+        <button
+          onClick={handleReset}
+          style={{
+            padding: "10px 20px",
+            background: "#ef4444",
+            border: "none",
+            borderRadius: "5px",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Reset
+        </button>
+        {steps.length > 0 && (
+          <div style={{ marginLeft: "20px", fontSize: "18px" }}>
+            Step {currentStep + 1} / {steps.length}
+          </div>
+        )}
+      </div>
+
+      {/* Description Section */}
+      {descriptions.length > 0 && (
+        <div
+          style={{
+            padding: "10px 20px",
+            background: "#1a1a1a",
+            fontSize: "16px",
+            borderBottom: "1px solid #333",
+          }}
+        >
+          {descriptions[currentStep]}
+        </div>
+      )}
+
+      {/* Tree Section */}
+      <div style={{ flex: 1 }}>
+        {currentTreeData.length > 0 && (
+          <Tree
+            data={currentTreeData}
+            orientation="vertical"
+            translate={{ x: window.innerWidth / 2, y: 100 }}
+            zoom={0.8}
+            pathFunc="step"
+            renderCustomNodeElement={renderCustomNode}
+            styles={{
+              links: { stroke: "white" },
+            }}
+          />
+        )}
+      </div>
+
+      {/* Huffman Codes & Decoding */}
+      {finalCodes && (
+        <div
+          style={{
+            padding: "20px",
+            background: "#111",
+            borderTop: "1px solid #333",
+          }}
+        >
+          <h3 style={{ marginBottom: "10px" }}>Final Huffman Codes:</h3>
+          <ul style={{ listStyle: "none", padding: 0 }}>
+            {Object.entries(finalCodes).map(([char, code]) => (
+              <li key={char}>
+                <strong>{char}</strong>: {code}
+              </li>
+            ))}
+          </ul>
+
+          <h3 style={{ marginTop: "20px" }}>Decode Huffman Code:</h3>
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <input
+              type="text"
+              placeholder="Enter binary code"
+              value={decodeInput}
+              onChange={(e) => setDecodeInput(e.target.value)}
+              style={{
+                padding: "10px",
+                width: "300px",
+                borderRadius: "5px",
+                border: "none",
+                background: "#222",
+                color: "white",
+              }}
+            />
+            <button
+              onClick={handleDecode}
+              style={{
+                padding: "10px 20px",
+                background: "#22c55e",
+                border: "none",
+                borderRadius: "5px",
+                color: "white",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              Decode
+            </button>
+          </div>
+          {decodedOutput && (
+            <p style={{ marginTop: "10px" }}>
+              <strong>Decoded Text:</strong> {decodedOutput}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// Sample Input Text
+// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff
