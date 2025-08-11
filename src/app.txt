@@ -317,7 +317,3 @@ export default function App() {
     </div>
   );
 }
-
-
-// Sample Input Text
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff
