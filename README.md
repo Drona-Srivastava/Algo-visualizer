@@ -37,6 +37,7 @@ npm install
 
 # Start the development server (Vite)
 npm run dev
+```
 
 ## 📷 Screenshots
 
