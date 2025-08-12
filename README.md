@@ -42,7 +42,7 @@ npm run dev
 
 ### 1️⃣ Home Page / Input Screen
 Home Page
-<img width="1919" height="982" alt="home" src="https://github.com/user-attachments/assets/de366070-6cc6-45cb-b5d5-aac7f63cbed2" />
+<img width="1919" height="982" alt="home" src="https://github.com/Drona-Srivastava/Algo-Simulation/blob/main/screenshots/home.png" />
 
 
 ### 2️⃣ Tree Building Animation
