@@ -1,16 +1,53 @@
-<<<<<<< HEAD
-# React + Vite
+# Huffman Encoding Visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite-based interactive visualization tool that demonstrates **Huffman Encoding** step-by-step.  
+It builds the Huffman Tree, generates binary codes for each character, and allows encoding/decoding of text in real time.
 
-Currently, two official plugins are available:
+## 🚀 Features
+- **Step-by-Step Tree Building** – Merges the two smallest frequency nodes in sequence with narration.
+- **Animated Visualization** – Uses `react-d3-tree` for rendering Huffman trees dynamically.
+- **Huffman Code Generation** – Automatically generates binary codes for each character.
+- **Decode Functionality** – Allows decoding of any Huffman-encoded binary string using the generated tree.
+- **Auto Animation** – Tree updates every 1.5 seconds to the next step.
+- **Reset Button** – Quickly clear the visualization and start over.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **React + Vite** – UI & state management.
+- **react-d3-tree** – Tree visualization.
+- **JavaScript (ES6)** – Core logic for Huffman encoding/decoding.
+- **CSS** – Styling.
 
-## Expanding the ESLint configuration
+## 📂 How It Works
+1. **Input Text** → Enter any text you want to encode.
+2. **Generate Tree** → The app calculates character frequencies and begins merging nodes.
+3. **Visualization** → Watch the Huffman Tree build itself step-by-step.
+4. **Final Codes** → See each character's binary Huffman code.
+5. **Decode** → Enter a binary string to decode it back to the original text.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# Algo-Simulation
->>>>>>> ca35c3f2116cba8e53b704dc1e430d5dc955b01e
+## ▶️ Usage
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/huffman-visualizer.git
+
+# Navigate into the folder
+cd huffman-visualizer
+
+# Install dependencies
+npm install
+
+# Start the development server (Vite)
+npm run dev
+
+## 📷 Screenshots
+
+### 1️⃣ Home Page / Input Screen
+![Home Page](screenshots/home.png)
+
+### 2️⃣ Tree Building Animation
+![Tree Animation](screenshots/animation.png)
+
+### 3️⃣ Generated Huffman Codes
+![Huffman Codes](screenshots/codes.png)
+
+### 4️⃣ Decoding Example
+![Decoding](screenshots/decoding.png)
