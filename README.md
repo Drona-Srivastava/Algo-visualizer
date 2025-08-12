@@ -43,10 +43,14 @@ npm run dev
 
 ### 1️⃣ Home Page / Input Screen
 Home Page
-![Home Page] (screenshots/home.png)
+![Home Page](screenshots/home.png)
 
 ### 2️⃣ Tree Building Animation
 ![Tree Animation](screenshots/tree_gen.mp4)
+
+
+https://github.com/user-attachments/assets/79f183bd-6f3f-451e-a1c2-d6246e6a1d0c
+
 
 ### 3️⃣ Generated Tree
 ![Huffman Tree](screenshots/tree.png)
