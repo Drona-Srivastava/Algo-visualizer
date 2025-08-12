@@ -27,7 +27,7 @@ It builds the Huffman Tree, generates binary codes for each character, and allow
 ## ▶️ Usage
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/huffman-visualizer.git
+git clone https://github.com/Drona-Srivastava/huffman-visualizer
 
 # Navigate into the folder
 cd huffman-visualizer
