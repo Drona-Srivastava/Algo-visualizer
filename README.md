@@ -43,14 +43,16 @@ npm run dev
 
 ### 1️⃣ Home Page / Input Screen
 Home Page
-<img width="1919" height="982" alt="home" src="https://github.com/Drona-Srivastava/Algo-Simulation/blob/main/screenshots/home.png" />
-
+![Home Page] (screenshots/home.png)
 
 ### 2️⃣ Tree Building Animation
-![Tree Animation](screenshots/animation.png)
+![Tree Animation](screenshots/tree_gen.mp4)
 
-### 3️⃣ Generated Huffman Codes
+### 3️⃣ Generated Tree
+![Huffman Tree](screenshots/tree.png)
+
+### 4️⃣ Generated Huffman Codes
 ![Huffman Codes](screenshots/codes.png)
 
-### 4️⃣ Decoding Example
+### 5️⃣ Decoding Example
 ![Decoding](screenshots/decoding.png)
