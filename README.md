@@ -1,4 +1,4 @@
-# Huffman Encoding Visualizer
+# 📉 Huffman Encoding Visualizer
 
 An interactive **Huffman Encoding visualizer** built using **React + Vite**, designed to demonstrate the complete compression workflow step-by-step.  
 The application visually constructs the Huffman Tree, generates optimal binary codes for each character, and supports **real-time encoding and decoding** of text.
@@ -7,7 +7,7 @@ This project focuses on making a **greedy compression algorithm intuitive and tr
 
 ---
 
-## Features
+## 🚀 Features
 
 - **Step-by-Step Tree Construction**  
   Sequentially merges the two lowest-frequency nodes with clear narration of each step.
@@ -30,7 +30,7 @@ This project focuses on making a **greedy compression algorithm intuitive and tr
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **React + Vite** – Component-based UI and fast development environment  
 - **react-d3-tree** – Interactive and animated tree visualization  
@@ -39,7 +39,7 @@ This project focuses on making a **greedy compression algorithm intuitive and tr
 
 ---
 
-## How It Works
+## 📂 How It Works
 
 1. **Input Text**  
    Enter any string to be compressed.
@@ -61,7 +61,7 @@ This project focuses on making a **greedy compression algorithm intuitive and tr
 
 ---
 
-## Usage
+## ▶️ Usage
 
 ```bash
 # Clone the repository
@@ -75,3 +75,26 @@ npm install
 
 # Start the development server
 npm run dev
+
+## 📷 Screenshots
+
+### 1️⃣ Home Page / Input Screen
+
+![Home Page](screenshots/home.png)
+
+### 2️⃣ Tree Building Animation
+
+https://github.com/user-attachments/assets/79f183bd-6f3f-451e-a1c2-d6246e6a1d0c
+
+
+### 3️⃣ Generated Tree
+
+![Huffman Tree](screenshots/tree.png)
+
+### 4️⃣ Generated Huffman Codes
+
+![Huffman Codes](screenshots/codes.png)
+
+### 5️⃣ Decoding Example
+
+![Decoding](screenshots/decoding.png)
