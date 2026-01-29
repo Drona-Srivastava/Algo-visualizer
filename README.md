@@ -75,7 +75,7 @@ npm install
 
 # Start the development server
 npm run dev
-
+```
 ## 📷 Screenshots
 
 ### 1️⃣ Home Page / Input Screen
